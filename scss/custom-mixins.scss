@@ -1,0 +1,260 @@
+// gradient
+@mixin gradient($direction, $color-start, $color-stop) {
+  background: linear-gradient($direction, $color-start, $color-stop)
+}
+
+@mixin transition {
+  transition: all .5s ease;
+}
+
+//button
+@mixin btn($padding-muliply-btn: .6) {
+  padding: .7rem * $padding-muliply-btn 2.5rem * $padding-muliply-btn;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: $global-weight-bold;
+  letter-spacing: .7px;
+  display: inline-block;
+
+  @include transition;
+
+  &.btn-yellow {
+    background-color: get-color(secondary);
+    border: 1px solid get-color(secondary);
+    color: $dark-gray;
+
+    &:hover {
+      background-color: transparent;
+      border: 1px solid get-color(secondary);
+      color: get-color(secondary);
+    }
+  }
+
+  &.btn-blue {
+    background-color: get-color(primary);
+    border: 1px solid get-color(primary);
+
+    &:hover {
+      background-color: get-color(secondary);
+      border: 1px solid get-color(secondary);
+    }
+  }
+
+  &.btn-transparent {
+    background-color: transparent;
+    border: 1px solid rgba($white, .7);
+    color: $white;
+
+    &:hover {
+      background-color: get-color(secondary);
+      border-color: get-color(secondary);
+      color: $dark-gray;
+    }
+  }
+}
+
+//animation
+@mixin js-check-visibility {
+
+  .js-check-visibility {
+
+    .animation-1 {
+      opacity: 0;
+      transform: translateX(-80px);
+      display: inline-block;
+    }
+
+    &.visible {
+
+      .animation-1 {
+
+        @include animation-left-in;
+      }
+    }
+
+    .animation-2 {
+      opacity: 0;
+      transform: translateX(-80px);
+      display: inline-block;
+    }
+
+    &.visible {
+
+      .animation-2 {
+
+        @include animation-left-in(400ms);
+      }
+    }
+
+    .animation-3 {
+      opacity: 0;
+      transform: translateX(-80px);
+      display: inline-block;
+    }
+
+    &.visible {
+
+      .animation-3 {
+
+        @include animation-left-in(600ms);
+      }
+    }
+
+    .animation-4 {
+      opacity: 0;
+      transform: translateX(-80px);
+      display: inline-block;
+    }
+
+    &.visible {
+
+      .animation-4 {
+
+        @include animation-left-in(800ms);
+      }
+    }
+  }
+}
+
+@mixin animation-left-in($delay: 0ms) {
+  opacity: 1;
+  transform: translateX(0);
+  transition: 800ms $delay cubic-bezier(.175, .885,.32,1.275);
+}
+
+@mixin animation-bounce-in($delay: 0ms) {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 800ms $delay cubic-bezier(.175, .885,.32,1.275);
+  visibility: hidden;
+
+  &.sub-visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+//shadow
+@mixin shadow($p1: 10px, $p2: 10px, $p3: 22px, $p4: rgba($black, .4)) {
+  box-shadow: $p1 $p2 $p3 $p4;
+}
+
+//meta description
+@mixin meta-description {
+
+  .meta-description {
+      background-color: get-color(primary);
+      border-radius: #{$global-radius}px;
+      padding: 1px 6px;
+      font-family: $header-font-family;
+      font-size: rem-calc(12px);
+      font-weight: $global-weight-bold;
+      display: inline-block;
+      margin-bottom: 7px;
+
+      .autor-name {
+        color: $white;
+      }
+
+      .date {
+        color: get-color(secondary);
+      }
+  }
+}
+
+@mixin menu($arg) {
+
+#{$arg} {
+  list-style-type: none;
+  font-family: $header-font-family;
+  float: left;
+
+  @if $arg == ".menu-footer" {
+    margin-left: 0;
+    margin-top: .7rem;
+
+    @include breakpoint(medium down){
+      text-align: center;
+      float: none;
+    }
+  }
+
+  @else {
+    margin-left: 80px;
+
+    @include breakpoint(medium down) {
+        display: none;
+    }
+  }
+
+  li {
+    list-style: none;
+    float: left;
+    position: relative;
+    height: 50px;
+
+    @include breakpoint(medium down){
+
+    @if $arg == ".menu-footer" {
+      float: none;
+      height: 35px;
+      }
+    }
+
+    a {
+      color: $white;
+      font-size: rem-calc(15px);
+      display: block;
+      cursor: pointer;
+      padding: 5px 11px;
+
+      @include transition;
+
+      &:hover {
+        color: get-color(secondary);
+      }
+    }
+
+    .sub-menu {
+      position: absolute;
+      top: 46px;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+      background-color: $white;
+      border-radius: #{$global-radius}px;
+      width: 180px;
+      padding: 10px 7px;
+
+      @include shadow(5px, 5px, 10px, rgba($black, .1));
+      @include animation-bounce-in;
+
+      &:before {
+        position: absolute;
+        top: -7px;
+        left: 16px;
+        content: '';
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid $white;
+      }
+
+      li {
+        height: auto;
+
+        a {
+          font-size: rem-calc(13px);
+          color: $dark-gray;
+
+          @include transition;
+
+          &:hover {
+            color: get-color(primary);
+          }
+        }
+      }
+    }
+  }
+}
+}
